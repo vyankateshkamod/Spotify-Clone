@@ -323,12 +323,15 @@ body {
 @media (max-width : 1200px) {
     .left {
         position: absolute;
-        left: -120%;
+        left: -130%;
         transition: all .3s;
         z-index: 1;
         width: 373px;
         background-color: black;
         padding: 0;
+        height: 100vh;
+        position: fixed;
+        top: 0;
     }
 
     .left .close {
@@ -388,14 +391,21 @@ body {
     }
 
     .cardContainer{
-        max-height: 50vh;
         max-height: unset;
         overflow-y:unset ;
+        margin-bottom: 35vh;
     }
 
     .playbar{
         right: 25px;
     }
+
+    .header{
+        position: fixed;
+        width: 100vw;
+        z-index: 1;
+    }
+    
 }
 
 @media(max-width:500px){
@@ -411,6 +421,10 @@ body {
         margin: 0 6px;
     }
 
+    .header{
+        padding: 7px;
+    }
+
     .cardContainer{
         margin: 0;
         justify-content: center;
@@ -418,5 +432,9 @@ body {
 
     .spotifyPlaylists h1{
         padding: 4px;
+    }
+
+    .left{
+        width: 100vw;
     }
 }
