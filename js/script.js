@@ -153,11 +153,13 @@ async function main() {
     // Add an event listener for hamburger
     document.querySelector(".hamburger").addEventListener("click", () => {
         document.querySelector(".left").style.left = "0"
+        document.querySelector(".header").style.zIndex="0"
     })
 
     // Add an event listener for close button
     document.querySelector(".close").addEventListener("click", () => {
         document.querySelector(".left").style.left = "-120%"
+        document.querySelector(".header").style.zIndex="1"
     })
 
     // Add an event listener to previous
