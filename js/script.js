@@ -31,7 +31,7 @@ async function getSongs(folder) {
             songs.push(element.href.split(`/${folder}/`)[1])
         }
     }
- 
+
 
 
     // Show all the songs in the playlist
@@ -83,12 +83,12 @@ async function displayAlbums() {
     let cardContainer = document.querySelector(".cardContainer")
     let array = Array.from(anchors)
     for (let index = 0; index < array.length; index++) {
-        const e = array[index]; 
+        const e = array[index];
         if (e.href.includes("/songs") && !e.href.includes(".htaccess")) {
             let folder = e.href.split("/").slice(-2)[0]
             // Get the metadata of the folder
             let a = await fetch(`/songs/${folder}/info.json`)
-            let response = await a.json(); 
+            let response = await a.json();
             cardContainer.innerHTML = cardContainer.innerHTML + ` <div data-folder="${folder}" class="card">
             <div class="play">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -106,12 +106,14 @@ async function displayAlbums() {
     }
 
     // Load the playlist whenever card is clicked
-    Array.from(document.getElementsByClassName("card")).forEach(e => { 
+    Array.from(document.getElementsByClassName("card")).forEach(e => {
         e.addEventListener("click", async item => {
             console.log("Fetching Songs")
-            songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`)  
+            songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`)
             playMusic(songs[0])
-
+            document.querySelector(".left").style.left = "0"
+            document.querySelector(".left").style.transition = "all 1s"
+            document.querySelector(".header").style.zIndex = "0"
         })
     })
 }
@@ -153,13 +155,13 @@ async function main() {
     // Add an event listener for hamburger
     document.querySelector(".hamburger").addEventListener("click", () => {
         document.querySelector(".left").style.left = "0"
-        document.querySelector(".header").style.zIndex="0"
+        document.querySelector(".header").style.zIndex = "0"
     })
 
     // Add an event listener for close button
     document.querySelector(".close").addEventListener("click", () => {
         document.querySelector(".left").style.left = "-120%"
-        document.querySelector(".header").style.zIndex="1"
+        document.querySelector(".header").style.zIndex = "1"
     })
 
     // Add an event listener to previous
@@ -187,28 +189,34 @@ async function main() {
     document.querySelector(".range").getElementsByTagName("input")[0].addEventListener("change", (e) => {
         console.log("Setting volume to", e.target.value, "/ 100")
         currentSong.volume = parseInt(e.target.value) / 100
-        if (currentSong.volume >0){
+        if (currentSong.volume > 0) {
             document.querySelector(".volume>img").src = document.querySelector(".volume>img").src.replace("mute.svg", "volume.svg")
         }
-        else{
-            document.querySelector(".volume>img").src = document.querySelector(".volume>img").src.replace("volume.svg","mute.svg")
+        else {
+            document.querySelector(".volume>img").src = document.querySelector(".volume>img").src.replace("volume.svg", "mute.svg")
         }
     })
 
     // Add event listener to mute the track
-    document.querySelector(".volume>img").addEventListener("click", e=>{ 
-        if(e.target.src.includes("volume.svg")){
+    document.querySelector(".volume>img").addEventListener("click", e => {
+        if (e.target.src.includes("volume.svg")) {
             e.target.src = e.target.src.replace("volume.svg", "mute.svg")
             currentSong.volume = 0;
             document.querySelector(".range").getElementsByTagName("input")[0].value = 0;
         }
-        else{
+        else {
             e.target.src = e.target.src.replace("mute.svg", "volume.svg")
             currentSong.volume = .10;
             document.querySelector(".range").getElementsByTagName("input")[0].value = 10;
         }
 
     })
+
+    //Add event listner to card 
+    // document.querySelector(".card").addEventListener("click",()=>{
+    //     document.querySelector(".left").style.left = "0"
+    //     document.querySelector(".header").style.zIndex="0"
+    // })
 
 
 
